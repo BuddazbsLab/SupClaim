@@ -10,3 +10,6 @@ SupClaim/.vs/SupClaim/v17/.suo
 SupClaim/SupClaim/obj/Debug/net6.0/SupClaim.csproj.FileListAbsolute.txt
 SupClaim/SupClaim/obj/Debug/net6.0/SupClaim.assets.cache
 SupClaim/SupClaim/obj/Debug/net6.0/SupClaim.GeneratedMSBuildEditorConfig.editorconfig
+SupClaim/SupClaim/obj/Debug/net6.0/.NETCoreApp,Version=v6.0.AssemblyAttributes.cs
+SupClaim/SupClaim/obj/Debug/net6.0/SupClaim.AssemblyInfo.cs
+SupClaim/SupClaim/obj/Debug/net6.0/SupClaim.GlobalUsings.g.cs
