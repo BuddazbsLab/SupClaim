@@ -1,3 +1,12 @@
 
 SupClaim/.vs/SupClaim/project-colors.json
 SupClaim/.vs/SupClaim/v17/.suo
+*.json
+*.dll
+*.exe
+*.pdb
+*.cache
+*.cache
+SupClaim/SupClaim/obj/Debug/net6.0/SupClaim.csproj.FileListAbsolute.txt
+SupClaim/SupClaim/obj/Debug/net6.0/SupClaim.assets.cache
+SupClaim/SupClaim/obj/Debug/net6.0/SupClaim.GeneratedMSBuildEditorConfig.editorconfig
