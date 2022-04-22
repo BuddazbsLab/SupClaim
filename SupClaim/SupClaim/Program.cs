@@ -3,7 +3,6 @@ using NLog;
 using NLog.Extensions.Logging;
 using NLog.Web;
 using SupClaim;
-using Telegram.Bot;
 
 var configSettingsApp = new ConfigurationBuilder()
             .SetBasePath(Directory.GetCurrentDirectory())
@@ -16,6 +15,9 @@ var logger = NLogBuilder.ConfigureNLog(LogManager.Configuration).GetCurrentClass
 Settings settings = new(configSettingsApp);
 var botSettings = settings.GetSettingsBotConfig();
 
+InitBot initBot = new();
+var botInit = await Task.Run(() => initBot.StartBot(settings));
+
 
 
 var startTimeSpan = TimeSpan.Zero;
@@ -27,7 +29,6 @@ var timer = new Timer(async e =>
     if (timesleep >= 08 && timesleep < 18 && datesleep != DayOfWeek.Saturday &&
         datesleep != DayOfWeek.Sunday)
     {
-        var botInit = new TelegramBotClient(settings.GetSettingsBotConfig().Token);
         logger.Info("[*]Начат процесс сбора данных");
         RequestApiClaim requestApiClaim = new(botSettings);
         var responseApi = requestApiClaim.MakeRequestToApiClaim();
