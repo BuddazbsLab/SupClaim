@@ -16,6 +16,7 @@ namespace SupClaim
         private string _buffer;
         private readonly Logger _logger;
 
+
         public Message(string responseApi, TelegramBotClient botInit, UsingBotConfig botSettings, Logger logger)
         {
             this._responseApi = responseApi;
@@ -51,11 +52,11 @@ namespace SupClaim
             }
             else
             {
-                var allClaims = DeserializationObject.Count;
-                var highClaim = DeserializationObject.Count(j => j.Priority.StartsWith("High"));
-                var averageClaim = DeserializationObject.Count(j => j.Priority.StartsWith("Average"));
-                var incidentClaim = DeserializationObject.Count(j => j.ObjectType.StartsWith("Incident"));
-                var lowClaim = DeserializationObject.Count(j => j.Priority.StartsWith("Low"));
+                int allClaims = DeserializationObject.Count;
+                int highClaim = DeserializationObject.Count(j => j.Priority.StartsWith("High"));
+                int averageClaim = DeserializationObject.Count(j => j.Priority.StartsWith("Average"));
+                int incidentClaim = DeserializationObject.Count(j => j.ObjectType.StartsWith("Incident"));
+                int lowClaim = DeserializationObject.Count(j => j.Priority.StartsWith("Low"));
 
                 LoggerInfo.Info("[*]Читаю данные из файла");
                 using (FileStream fstream = File.OpenRead("buffer.txt"))
