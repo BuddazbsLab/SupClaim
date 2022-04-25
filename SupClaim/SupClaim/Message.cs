@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using NLog;
 using SupClaim.Model;
+using System.Collections.Generic;
 using System.Text;
 using Telegram.Bot;
 
@@ -21,7 +22,7 @@ namespace SupClaim
         {
             this._responseApi = responseApi;
             this._botInit = botInit;
-            this._deserializationObject = JsonConvert.DeserializeObject<List<ResponseStructure>>(ResponseApi.ToString());
+            this._deserializationObject = JsonConvert.DeserializeObject<List<ResponseStructure>>(ResponseApi.ToString());          
             this._botSettings = botSettings;
             this._buffer = string.Empty;
             this._logger = logger;
@@ -69,7 +70,7 @@ namespace SupClaim
                 }
 
                 LoggerInfo.Info("[*]Сравниваю данные полученные по API с теми что в файле");
-                var compareString = string.Compare(Buffer, ResponseApi);
+                int compareString = string.Compare(Buffer, ResponseApi);
 
                 if (compareString <= 0)
                 {
