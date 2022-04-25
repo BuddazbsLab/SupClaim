@@ -1,7 +1,6 @@
 ﻿using Newtonsoft.Json;
 using NLog;
 using SupClaim.Model;
-using System.Collections.Generic;
 using System.Text;
 using Telegram.Bot;
 
@@ -9,7 +8,6 @@ namespace SupClaim
 {
     sealed internal class Message
     {
-        private readonly List<ResponseStructure> _deserializationObject;
         private readonly UsingBotConfig _botSettings;
         private readonly string _responseApi;
         private readonly TelegramBotClient _botInit;
@@ -21,8 +19,7 @@ namespace SupClaim
         public Message(string responseApi, TelegramBotClient botInit, UsingBotConfig botSettings, Logger logger)
         {
             this._responseApi = responseApi;
-            this._botInit = botInit;
-            this._deserializationObject = JsonConvert.DeserializeObject<List<ResponseStructure>>(ResponseApi.ToString());          
+            this._botInit = botInit;         
             this._botSettings = botSettings;
             this._buffer = string.Empty;
             this._logger = logger;
@@ -32,7 +29,6 @@ namespace SupClaim
         public Logger LoggerInfo => this._logger;
         public string ResponseApi => this._responseApi;
         public TelegramBotClient BotInit => this._botInit;
-        public List<ResponseStructure> DeserializationObject => this._deserializationObject;
         public UsingBotConfig BotSettings => this._botSettings;
 
         public string Buffer
@@ -53,11 +49,12 @@ namespace SupClaim
             }
             else
             {
-                int allClaims = DeserializationObject.Count;
-                int highClaim = DeserializationObject.Count(j => j.Priority.StartsWith("High"));
-                int averageClaim = DeserializationObject.Count(j => j.Priority.StartsWith("Average"));
-                int incidentClaim = DeserializationObject.Count(j => j.ObjectType.StartsWith("Incident"));
-                int lowClaim = DeserializationObject.Count(j => j.Priority.StartsWith("Low"));
+                var deserializationObject = JsonConvert.DeserializeObject<List<ResponseStructure>>(ResponseApi.ToString());
+                int allClaims = deserializationObject.Count;
+                int highClaim = deserializationObject.Count(j => j.Priority.StartsWith("High"));
+                int averageClaim = deserializationObject.Count(j => j.Priority.StartsWith("Average"));
+                int incidentClaim = deserializationObject.Count(j => j.ObjectType.StartsWith("Incident"));
+                int lowClaim = deserializationObject.Count(j => j.Priority.StartsWith("Low"));
 
                 LoggerInfo.Info("[*]Читаю данные из файла");
                 using (FileStream fstream = File.OpenRead("buffer.txt"))
