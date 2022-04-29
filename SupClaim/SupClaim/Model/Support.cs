@@ -1,8 +1,9 @@
 ﻿using Newtonsoft.Json;
 
+
 namespace SupClaim.Model
 {
-    public class ResponseStructure
+    internal class Support
     {
         [JsonProperty(PropertyName = "objectType")]
         public string ObjectType { get; init; }
@@ -12,6 +13,5 @@ namespace SupClaim.Model
 
         [JsonProperty(PropertyName = "assignedToOperatorName")]
         public string AssignedToOperatorName { get; init; }
-
     }
 }

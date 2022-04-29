@@ -5,6 +5,7 @@ using NLog.Web;
 using SupClaim;
 using Telegram.Bot;
 
+#region Конфиги
 var configSettingsApp = new ConfigurationBuilder()
             .SetBasePath(Directory.GetCurrentDirectory())
             .AddJsonFile("appsettings.json", optional: true, reloadOnChange: false).Build();
@@ -15,7 +16,7 @@ var logger = NLogBuilder.ConfigureNLog(LogManager.Configuration).GetCurrentClass
 
 Settings settings = new(configSettingsApp);
 var botSettings = settings.GetSettingsBotConfig();
-
+#endregion
 
 
 var startTimeSpan = TimeSpan.Zero;
@@ -32,9 +33,37 @@ var timer = new Timer(async e =>
         RequestApiClaim requestApiClaim = new(botSettings);
         var responseApi = requestApiClaim.MakeRequestToApiClaim();
 
-        Message message = new(responseApi, botInit, botSettings, logger);
-        await message.SendMessage();
+        ResponseHandler responseHandler = new(responseApi);
+        var resultHendler = responseHandler.ConvertAnswersIntoOne();
 
+        #region Сообщеньки
+        SupportMessage supportMessage = new(resultHendler, botInit, botSettings, logger);
+        var supmessage = await supportMessage.SendSupportMessage();
+
+        SupportClientMessage supportClientMessage = new(resultHendler, botInit, botSettings, logger);
+        var supClient = await supportClientMessage.SendSupportClientMessage();
+
+        YTGroupMessage yTGroupMessage = new(resultHendler, botInit, botSettings, logger);
+        var ytGr = await yTGroupMessage.SendYTGroupMessage();
+
+        ChekYTMessage chekYTMessage = new(resultHendler, botInit, botSettings, logger);
+        var chekYt = await chekYTMessage.SendChekYTMessage();
+        #endregion
+
+        AnswerComparator answerComparator = new(logger, resultHendler);
+        var comparisonResult = await answerComparator.CompareDataObtained();
+
+        if(comparisonResult == true)
+        {
+            Message message = new(resultHendler, botInit, botSettings, logger) { SendSomeMessage = supmessage + supClient + ytGr + chekYt };
+            await message.SendMessage();
+        }
+        else
+        {
+
+            logger.Info(@"[*]Данные совпадают. Слать нечего
+=======================================================================");
+        }
     }
 }, null, startTimeSpan, periodTimeSpan);
 
