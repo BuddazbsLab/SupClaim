@@ -38,16 +38,16 @@ var timer = new Timer(async e =>
 
         #region Сообщеньки
         SupportMessage supportMessage = new(resultHendler, botInit, botSettings, logger);
-        var supmessage = await supportMessage.SendSupportMessage();
+        var supmessage = supportMessage.SendSupportMessage();
 
         SupportClientMessage supportClientMessage = new(resultHendler, botInit, botSettings, logger);
-        var supClient = await supportClientMessage.SendSupportClientMessage();
+        var supClient = supportClientMessage.SendSupportClientMessage();
 
         YTGroupMessage yTGroupMessage = new(resultHendler, botInit, botSettings, logger);
-        var ytGr = await yTGroupMessage.SendYTGroupMessage();
+        var ytGr = yTGroupMessage.SendYTGroupMessage();
 
         ChekYTMessage chekYTMessage = new(resultHendler, botInit, botSettings, logger);
-        var chekYt = await chekYTMessage.SendChekYTMessage();
+        var chekYt = chekYTMessage.SendChekYTMessage();
         #endregion
 
         AnswerComparator answerComparator = new(logger, resultHendler);
@@ -64,6 +64,10 @@ var timer = new Timer(async e =>
             logger.Info(@"[*]Данные совпадают. Слать нечего
 =======================================================================");
         }
+    }
+    else
+    {
+        logger.Info("Я отдыхаю.");
     }
 }, null, startTimeSpan, periodTimeSpan);
 

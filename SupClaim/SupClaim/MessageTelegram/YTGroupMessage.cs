@@ -14,7 +14,7 @@ namespace SupClaim
         {
         }
 
-        public async Task<string> SendYTGroupMessage()
+        public string SendYTGroupMessage()
         {
 
             ResponeStruct deserializationObject = JsonConvert.DeserializeObject<ResponeStruct>(ResponseApi.ToString());

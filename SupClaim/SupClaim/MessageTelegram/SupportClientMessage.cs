@@ -17,7 +17,7 @@ namespace SupClaim
         {
         }
 
-        public async Task<string> SendSupportClientMessage()
+        public string SendSupportClientMessage()
         {
             ResponeStruct deserializationObject = JsonConvert.DeserializeObject<ResponeStruct>(ResponseApi.ToString());
             // SupportClient Обращения

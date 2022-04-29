@@ -12,7 +12,7 @@ namespace SupClaim
         {
         }
 
-        public async Task<string> SendChekYTMessage()
+        public string SendChekYTMessage()
         {
             ResponeStruct deserializationObject = JsonConvert.DeserializeObject<ResponeStruct>(ResponseApi.ToString());
             // Проверить YT Обращения
